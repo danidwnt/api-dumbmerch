@@ -37,6 +37,8 @@ const {
     getTransactions 
 } = require('../controllers/transaction')
 
+const {register, login} = require('../controllers/auth')
+
 
 router.post('/profile', addProfile)
 
@@ -67,5 +69,8 @@ router.delete('/category/:id', deleteCategory)
 
 router.get('/transactions', getTransactions)
 router.post('/transaction', addTransaction)
+
+router.post('/register', register)
+router.post('/login', login)
 
 module.exports = router
