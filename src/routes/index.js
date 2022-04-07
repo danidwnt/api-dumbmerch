@@ -2,42 +2,46 @@ const express = require('express')
 
 const router = express.Router()
 
-const { 
-    addUsers, 
-    getUsers, 
-    getUser, 
+const {
+    addUsers,
+    getUsers,
+    getUser,
     getUsersProducts,
 } = require('../controllers/user')
 
-const { 
-    getProducts, 
-    addProduct, 
-    getProduct, 
-    updateProduct, 
-    deleteProduct, 
-    getProductsUser, 
-    getProductsCategory, 
+const {
+    getProducts,
+    addProduct,
+    getProduct,
+    updateProduct,
+    deleteProduct,
+    getProductsUser,
+    getProductsCategory,
     getProductsAll
 } = require('../controllers/product')
 
-const { addCategory, 
-    getCategorys, 
-    getCategory, 
-    updateCategory, 
-    deleteCategory, 
-    getCategoryProduct 
+const { addCategory,
+    getCategorys,
+    getCategory,
+    updateCategory,
+    deleteCategory,
+    getCategoryProduct
 } = require('../controllers/category')
 
-const { 
-    addProfile 
+const {
+    addProfile
 } = require('../controllers/profile')
 
-const { 
-    addTransaction, 
-    getTransactions 
+const {
+    addTransaction,
+    getTransactions
 } = require('../controllers/transaction')
 
-const {register, login} = require('../controllers/auth')
+
+const { register, login } = require('../controllers/auth')
+
+//middleware
+const { auth } = require('../middlewares/auth') 
 
 
 router.post('/profile', addProfile)
@@ -49,26 +53,26 @@ router.get('/user/:id', getUser)
 router.get('/user-products', getUsersProducts)
 
 
-router.get('/products', getProducts)
-router.get('/product/:id', getProduct)
-router.get('/productUser', getProductsUser)
-router.get('/productCategory', getProductsCategory)
-router.get('/productAll', getProductsAll)
-router.post('/product', addProduct)
-router.delete('/product/:id', deleteProduct)
-router.patch('/product/:id', updateProduct)
+router.get('/products', auth, getProducts)
+router.get('/product/:id', auth, getProduct)
+router.get('/productUser', auth, getProductsUser)
+router.get('/productCategory', auth, getProductsCategory)
+router.get('/productAll', auth, getProductsAll)
+router.post('/product', auth, addProduct)
+router.delete('/product/:id', auth, deleteProduct)
+router.patch('/product/:id', auth, updateProduct)
 
 
-router.post('/category', addCategory)
-router.get('/categorys', getCategorys)
-router.get('/category/:id', getCategory)
-router.get('/categoryProduct', getCategoryProduct)
-router.patch('/category/:id', updateCategory)
-router.delete('/category/:id', deleteCategory)
+router.post('/category', auth, addCategory)
+router.get('/categorys', auth, getCategorys)
+router.get('/category/:id', auth, getCategory)
+router.get('/categoryProduct', auth, getCategoryProduct)
+router.patch('/category/:id', auth, updateCategory)
+router.delete('/category/:id', auth, deleteCategory)
 
 
-router.get('/transactions', getTransactions)
-router.post('/transaction', addTransaction)
+router.get('/transactions', auth, getTransactions)
+router.post('/transaction', auth, addTransaction)
 
 router.post('/register', register)
 router.post('/login', login)
